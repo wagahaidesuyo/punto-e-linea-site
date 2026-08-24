@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>施工事例｜PUNTO E LINEA（プント エ リネア）</title>
+<meta name="description" content="PUNTO E LINEAが手がけた店舗・オフィス・住居の施工事例。写真は準備中です。">
+<link rel="canonical" href="https://punto-e-linea.co.jp/works.html">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500&family=Zen+Old+Mincho:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+/* =========================================================================
+   brand.css — ブランドサイトの設計体系
+   構成：0 トークン / 1 土台 / 2 ローダー / 3 カーソル / 4 ヘッダー /
+        5 没入FV / 6 エディトリアル / 7 便益 / 8 オファー / 9 FAQ /
+        10 フッター / 11 出現 / 12 レスポンシブ
+   ========================================================================= */
+
+/* ---------- 0. トークン ---------- */
+:root {
+  --ink: #14120F;
+  --ink-dim: rgba(20, 18, 15, 0.66);
+  --ink-faint: rgba(20, 18, 15, 0.26);
+  --bg: #F4F1EA;
+  --bg-2: #E7E2D6;
+  --accent: #B6242A; /* PUNTO E LINEA 公式ロゴPDFより抽出した正式な赤 (#B6242A) */
+  --brand-maroon: #5B3135; /* 公式ロゴのワードマーク色（PUNTO/LINEA）。同じくPDFより抽出 */
+  --line: rgba(20, 18, 15, 0.16);
+
+  --font-display: "Zen Old Mincho", "Times New Roman", serif;
+  --font-ui: "Zen Kaku Gothic New", system-ui, sans-serif;
+
+  /* 版面：24カラム。エディトリアルの非対称を作るための土台 */
+  --cols: 24;
+  --gutter: clamp(14px, 1.4vw, 26px);
+  --pad: clamp(20px, 5vw, 88px);
+
+  --t-hero: clamp(2.4rem, 5.4vw, 5.4rem);
+  --t-h2: clamp(1.9rem, 3.6vw, 3.6rem);
+  --t-h3: clamp(1.15rem, 1.6vw, 1.6rem);
+  --t-body: clamp(0.96rem, 1.05vw, 1.12rem);
+  --t-meta: clamp(0.66rem, 0.76vw, 0.78rem);
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur: 1.05s;
+}
+
+/* ---------- 1. 土台 ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: auto; }
+html.is-locked { overflow: hidden; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: var(--t-body);
+  line-height: 1.9;
+  font-feature-settings: "palt" 1;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img, video, canvas { display: block; max-width: 100%; }
+[hidden] { display: none !important; }
+:target, section[id] { scroll-margin-top: clamp(70px, 9vh, 110px); }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+
+::selection { background: var(--ink); color: var(--bg); }
+
+.bs-shell { position: relative; z-index: 1; }
+
+.bs-container {
+  width: 100%;
+  padding-inline: var(--pad);
+  margin-inline: auto;
+  max-width: 1680px;
+}
+
+.bs-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), 1fr);
+  column-gap: var(--gutter);
+}
+
+.bs-meta {
+  font-family: var(--font-ui);
+  font-size: var(--t-meta);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  font-weight: 400;
+}
+
+.bs-rule { height: 1px; background: var(--line); border: 0; margin: 0; }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; margin: -1px;
+  padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ---------- 2. ローダー ---------- */
+/* 既定は非表示。JSが生きているときだけ <html> に .has-js が付いて現れる。
+   こうしないと JS が動かない環境で、真っ暗なローダーに閉じ込められる。 */
+.bs-loader { display: none; }
+
+.has-js .bs-loader {
+  position: fixed; inset: 0; z-index: 200;
+  background: var(--bg);
+  display: grid; place-items: center;
+  transition: opacity 1s var(--ease), visibility 1s;
+}
+.bs-loader.is-gone { opacity: 0; visibility: hidden; pointer-events: none; }
+
+.bs-loader__inner { width: min(520px, 78vw); text-align: center; }
+
+.bs-loader__mark {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.4vw, 2.1rem);
+  letter-spacing: 0.16em;
+  margin: 0 0 2.6rem;
+  opacity: 0;
+  animation: bs-fade 1.4s var(--ease) 0.25s forwards;
+}
+
+.bs-loader__bar { position: relative; height: 1px; background: var(--ink-faint); overflow: hidden; }
+.bs-loader__bar-fill {
+  position: absolute; inset: 0;
+  background: var(--ink);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.5s var(--ease);
+}
+
+.bs-loader__row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-top: 0.9rem;
+}
+
+.bs-loader__enter {
+  margin-top: 2.8rem;
+  font-family: var(--font-ui);
+  font-size: var(--t-meta);
+  letter-spacing: 0.24em; text-transform: uppercase;
+  padding: 0.95em 2.4em;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  opacity: 0; transform: translateY(8px); pointer-events: none;
+  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease),
+              background-color 0.5s var(--ease), color 0.5s var(--ease);
+}
+.bs-loader.is-ready .bs-loader__enter { opacity: 1; transform: none; pointer-events: auto; }
+.bs-loader__enter:hover { background: var(--ink); color: var(--bg); }
+
+@keyframes bs-fade { to { opacity: 1; } }
+
+/* ---------- 3. カスタムカーソル ---------- */
+/* ---------- カーソル ----------
+   difference 合成は使わない。明るい地では黒い塊に反転して、
+   重ねたボタンごと読めなくなる（実際に潰した）。
+   代わりに「輪」にして中を透かし、下のボタンを見せる。 */
+/* 自前のカーソルを出すあいだは、OSの矢印を消す。
+   両方出ていると、自前のほうが「余分な点」にしか見えない。 */
+.has-cursor, .has-cursor * { cursor: none; }
+/* 入力欄だけは、文字を打つ場所が分かるよう I ビームを残す */
+.has-cursor input, .has-cursor textarea, .has-cursor select { cursor: text; }
+
+.bs-cursor {
+  display: none;
+  position: fixed; top: 0; left: 0; z-index: 190;
+  width: 36px; height: 36px; margin: -18px 0 0 -18px;
+  border-radius: 999px;
+  background: var(--ink);
+  border: 2px solid transparent;
+  /* 内側に細い縁、外側にうっすら暈（かさ）。地が明でも暗でも輪郭が立つ */
+  box-shadow: 0 0 0 1.5px rgba(0, 0, 0, .22),
+              0 0 0 14px rgba(128, 128, 128, .13),
+              0 3px 14px rgba(0, 0, 0, .26);
+  pointer-events: none;
+  transition: width .4s var(--ease), height .4s var(--ease), margin .4s var(--ease),
+              background-color .3s var(--ease), border-color .3s var(--ease),
+              box-shadow .3s var(--ease);
+}
+body.has-cursor .bs-cursor { display: block; }
+/* リンクに重ねたとき：大きな輪になる。中は透けたまま */
+.bs-cursor.is-active {
+  width: 132px; height: 132px; margin: -66px 0 0 -66px;
+  background: rgba(0, 0, 0, .06);
+  border-color: var(--ink);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, .35), 0 8px 30px rgba(0, 0, 0, .28);
+  backdrop-filter: blur(1.5px);
+}
+.bs-cursor__label {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  opacity: 0; transition: opacity .3s var(--ease);
+}
+.bs-cursor__label::before {
+  /* 文字は必ず読ませたいので、無地の札を敷く */
+  content: attr(data-label);
+  padding: .42em 1.1em; border-radius: 999px;
+  background: var(--ink); color: var(--bg);
+  font-family: var(--font-ui); font-weight: 600;
+  font-size: .82rem; letter-spacing: .14em; text-transform: uppercase;
+  white-space: nowrap;
+}
+.bs-cursor.is-active .bs-cursor__label { opacity: 1; }
+
+/* 地の明暗で色を入れ替える。1色だとどちらかで沈む */
+/* :not(.is-active) を付けないと、地の色指定が輪の透過に勝って
+   また塗り潰しの円に戻る（詳細度で負ける） */
+:root[data-tone="light"] .bs-cursor:not(.is-active) { background: #14120F; }
+:root[data-tone="light"] .bs-cursor.is-active {
+  background: rgba(20, 18, 15, .07); border-color: #14120F;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, .6), 0 8px 30px rgba(20, 18, 15, .22);
+}
+:root[data-tone="light"] .bs-cursor__label::before { background: #14120F; color: #F4F2ED; }
+:root[data-tone="dark"] .bs-cursor:not(.is-active) { background: #F2EFE9; }
+:root[data-tone="dark"] .bs-cursor.is-active {
+  background: rgba(242, 239, 233, .07); border-color: #F2EFE9;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .45), 0 8px 30px rgba(0, 0, 0, .4);
+}
+:root[data-tone="dark"] .bs-cursor__label::before { background: #F2EFE9; color: #0B0B0C; }
+
+@media (hover: none) { .bs-cursor { display: none; } }
+
+/* ---------- 4. ヘッダー ---------- */
+.bs-header {
+  position: fixed; inset: 0 0 auto; z-index: 120;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: clamp(16px, 2.2vw, 30px) var(--pad);
+  transition: background-color 0.6s var(--ease), backdrop-filter 0.6s var(--ease);
+}
+.bs-header.is-scrolled {
+  background: color-mix(in srgb, var(--bg) 72%, transparent);
+  backdrop-filter: blur(14px);
+}
+.bs-header__logo {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 1.3vw, 1.25rem);
+  letter-spacing: 0.14em;
+  color: var(--brand-maroon); /* 公式ロゴのワードマーク色。FV(夜)とflip後は別ルールで上書き */
+}
+.bs-header__nav { display: flex; gap: clamp(18px, 2.4vw, 40px); align-items: center; }
+.bs-header__link {
+  font-size: var(--t-meta); letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--ink-dim); transition: color 0.4s var(--ease);
+}
+.bs-header__link:hover { color: var(--ink); }
+
+.bs-btn {
+  display: inline-flex; align-items: center; gap: 0.7em;
+  font-size: var(--t-meta); letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 0.9em 1.9em;
+  border: 1px solid var(--line); border-radius: 999px;
+  transition: background-color 0.5s var(--ease), color 0.5s var(--ease),
+              border-color 0.5s var(--ease);
+}
+.bs-btn:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.bs-btn--solid { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.bs-btn--solid:hover { background: transparent; color: var(--ink); border-color: var(--line); }
+
+/* ---------- 5. 舞台（4型が共有する骨格） ---------- */
+/*  progress:scroll  → 高さを伸ばし、canvas を sticky で貼りつける
+    progress:chapter / static → 画面1枚に固定する（ページではなく場所になる） */
+
+.bs-stage { position: relative; height: calc(var(--bs-scroll-vh, 320) * 1svh); }
+.bs-stage__sticky { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+
+[data-progress="chapter"] .bs-stage,
+[data-progress="static"]  .bs-stage { height: 100svh; }
+/* ★fixed にすると、舞台の文字が最後まで画面に貼り付いたままになり、
+   下の読み物と重なる（mode:'balanced' の world / symbol で実測・2026-08-04）。
+   sticky なら舞台の高さぶんだけ留まって、そのあとは流れて消える。 */
+[data-progress="chapter"] .bs-stage__sticky,
+[data-progress="static"]  .bs-stage__sticky {
+  position: sticky; top: 0; inset: auto; height: 100svh;
+}
+
+.bs-canvas { position: absolute; inset: 0; }
+.bs-canvas canvas { width: 100% !important; height: 100% !important; }
+
+/* 舞台に載る文字は、必ず DOM に実テキストで置く */
+.bs-layer { position: absolute; inset: 0; padding: clamp(64px, 9vh, 120px) var(--pad); pointer-events: none; }
+.bs-layer a, .bs-layer button { pointer-events: auto; }
+
+/* === word：一節ずつ中央に === */
+.bs-stanzas { position: absolute; inset: 0; display: grid; place-items: center; padding: var(--pad); pointer-events: none; }
+.bs-stanza {
+  grid-area: 1 / 1; max-width: min(72ch, 88vw); text-align: center;
+  font-family: var(--font-display); font-weight: 300;
+  font-size: var(--t-hero); line-height: 1.62; letter-spacing: 0.01em;
+}
+.bs-stanza[data-align="left"] { text-align: left; justify-self: start; }
+.bs-stanza[data-font="ui"] { font-family: var(--font-ui); }
+.bs-line { display: block; }
+.bs-line[data-role="source"] { font-size: 0.4em; font-style: italic; opacity: 0.55; margin-top: 1.6em; }
+.bs-stage.is-webgl .bs-stanzas { opacity: 0; }
+
+/* === object：停留所ごとに言葉が入れ替わる === */
+.bs-stations { position: absolute; inset: 0; display: grid; place-items: center; padding: var(--pad); }
+.bs-station {
+  grid-area: 1 / 1; width: 100%; max-width: 1680px;
+  display: grid; grid-template-columns: repeat(24, 1fr); column-gap: var(--gutter);
+  opacity: 0; transform: translateY(18px);
+  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+  pointer-events: none;
+}
+.bs-station.is-current { opacity: 1; transform: none; pointer-events: auto; }
+.bs-station__no { grid-column: 1 / span 3; align-self: start; }
+.bs-station__title {
+  grid-column: 1 / span 7; align-self: center; margin: 0;
+  font-family: var(--font-display); font-weight: 300;
+  font-size: var(--t-h2); line-height: 1.35;
+}
+.bs-station__text {
+  grid-column: 18 / span 7; align-self: center; margin: 0;
+  color: var(--ink-dim); max-width: 34ch;
+}
+
+/* === world：世界の上に固定するHUD === */
+.bs-hud {
+  position: absolute; inset: 0;
+  padding: clamp(78px, 10vh, 130px) var(--pad) clamp(56px, 8vh, 96px);
+  display: grid; grid-template-rows: auto 1fr auto; pointer-events: none;
+}
+.bs-hud a, .bs-hud button { pointer-events: auto; }
+.bs-hud__lead {
+  margin: 0; max-width: min(24ch, 62vw);
+  font-family: var(--font-display); font-weight: 300;
+  font-size: var(--t-h2); line-height: 1.35;
+}
+.bs-hud__foot {
+  align-self: end; display: flex; flex-wrap: wrap; gap: 10px 34px;
+  align-items: flex-end; justify-content: space-between;
+}
+.bs-hud__skills { margin: 0; max-width: 46ch; color: var(--ink-dim); }
+.bs-hud__micro {
+  font-family: var(--font-ui); font-size: 0.62rem; letter-spacing: 0.14em;
+  line-height: 1.9; color: var(--ink-faint); text-transform: uppercase;
+}
+
+/* === symbol：象徴の下に入口を生やす === */
+.bs-doors {
+  position: absolute; inset: auto 0 clamp(48px, 9vh, 110px);
+  display: grid; place-items: center; gap: 1.2rem; padding-inline: var(--pad);
+}
+.bs-doors__title { margin: 0; text-align: center; font-family: var(--font-display);
+  font-weight: 300; font-size: var(--t-h2); line-height: 1.3; }
+.bs-doors__note { margin: 0; text-align: center; color: var(--ink-dim); max-width: 46ch; }
+.bs-doors__row { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: 0.6rem; }
+
+/* 3Dの上に文字を置く型は、下端に暗幕を敷いて可読性を担保する。
+   背景に何が来ても読めることを保証するための保険。 */
+[data-scene="symbol"] .bs-stage.is-webgl .bs-stage__sticky::after,
+[data-scene="world"]  .bs-stage.is-webgl .bs-stage__sticky::after {
+  content: ""; position: absolute; inset: auto 0 0; height: 46%;
+  background: linear-gradient(to top, var(--bg) 6%, transparent 100%);
+  pointer-events: none;
+}
+[data-scene="symbol"] .bs-doors,
+[data-scene="world"] .bs-hud { z-index: 1; }
+
+/* === blades：幕ごとの文言 === */
+.bs-acts { position: absolute; inset: 0; display: grid; place-items: center;
+  padding: var(--pad); pointer-events: none; }
+.bs-act {
+  grid-area: 1 / 1; width: 100%; max-width: 1180px;
+  opacity: 0; transform: translateY(22px);
+  transition: opacity .9s var(--ease), transform .9s var(--ease);
+}
+.bs-act.is-on { opacity: 1; transform: none; }
+.bs-act__line {
+  margin: .4rem 0 0; font-family: var(--font-display); font-weight: 300;
+  font-size: clamp(1.4rem, 2.6vw, 2.4rem); letter-spacing: .04em;
+}
+.bs-act--center { text-align: center; }
+.bs-act__big {
+  margin: 0; font-family: var(--font-display); font-weight: 300;
+  font-size: clamp(1.9rem, 4.4vw, 4.2rem); line-height: 1.4; letter-spacing: .03em;
+  text-shadow: 0 2px 40px color-mix(in srgb, var(--bg) 85%, transparent);
+}
+.bs-names { list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: clamp(14px, 3vw, 48px); justify-content: center; }
+.bs-names li {
+  font-family: var(--font-ui); font-size: clamp(.78rem, 1.3vw, 1.05rem);
+  letter-spacing: .22em; position: relative; padding-bottom: .5em;
+}
+.bs-names li::after { content: ""; position: absolute; inset: auto 0 0;
+  height: 1px; background: var(--line); }
+.bs-names li + li::before { content: "×"; position: absolute;
+  left: calc(clamp(14px, 3vw, 48px) * -0.5); transform: translateX(-50%);
+  color: var(--ink-faint); }
+
+/* 白への反転。3D側の背景色も同時に白へ寄る */
+.bs-act--flip { text-align: center; }
+.bs-flip__copy {
+  margin: 0; font-family: var(--font-display); font-weight: 300;
+  font-size: clamp(2.0rem, 6vw, 5.6rem); line-height: 1.25; letter-spacing: .02em;
+  color: #14120f;
+}
+.bs-flip__sub { margin: 1.6rem 0 0; color: rgba(20,18,15,.62);
+  font-size: clamp(.9rem, 1.2vw, 1.1rem); letter-spacing: .08em; }
+.bs-flip__copy .bs-ch {
+  display: inline-block; opacity: 0; transform: translateY(.6em) rotate(6deg);
+  transition: opacity .6s var(--ease), transform .6s var(--ease);
+}
+.bs-act--flip.is-on .bs-flip__copy .bs-ch { opacity: 1; transform: none; }
+
+/* 反転後はヘッダーの文字も黒へ */
+.bs-stage[data-flip="1"] ~ * .bs-header,
+[data-flip="1"] .bs-header__logo, [data-flip="1"] .bs-header__link { color: #14120f; }
+
+/* === 章立て（chapter）の操作 === */
+.bs-chapters { position: absolute; right: var(--pad); top: 50%; transform: translateY(-50%); display: grid; gap: 12px; }
+.bs-chapters button { width: 9px; height: 9px; border-radius: 999px; border: 1px solid var(--line);
+  transition: background-color 0.4s var(--ease); }
+.bs-chapters button.is-current { background: var(--ink); }
+.bs-next { position: absolute; left: 50%; bottom: clamp(28px, 5vh, 60px); transform: translateX(-50%); }
+
+/* --- WebGL不可・reduced-motion：ページとして読める形に落ちる --- */
+.bs-stage:not(.is-webgl) { height: auto; background: linear-gradient(180deg, var(--bg), var(--bg-2)); }
+.bs-stage:not(.is-webgl) .bs-stage__sticky { position: static; height: auto; overflow: visible; }
+.bs-stage:not(.is-webgl) .bs-layer,
+.bs-stage:not(.is-webgl) .bs-stanzas,
+.bs-stage:not(.is-webgl) .bs-stations,
+.bs-stage:not(.is-webgl) .bs-acts,
+.bs-stage:not(.is-webgl) .bs-hud,
+.bs-stage:not(.is-webgl) .bs-doors {
+  position: static; display: block; inset: auto; padding: 14svh var(--pad) 8svh;
+}
+/* blades の幕。JSが動かないと is-on が付かず、opacity:0 のまま消える。
+   素通しのときは重ねをやめて縦に流す（2026-08-04 実測で発覚） */
+.bs-stage:not(.is-webgl) .bs-act {
+  opacity: 1; transform: none; pointer-events: auto;
+  margin: 0 auto clamp(56px, 10svh, 120px); max-width: 60ch;
+}
+.bs-stage:not(.is-webgl) .bs-act:last-child { margin-bottom: 0; }
+.bs-stage:not(.is-webgl) .bs-stanza { margin: 0 auto clamp(90px, 20svh, 240px); max-width: min(60ch, 88vw); }
+.bs-stage:not(.is-webgl) .bs-stanza:last-child { margin-bottom: 0; }
+.bs-stage:not(.is-webgl) .bs-station {
+  display: block; opacity: 1; transform: none; pointer-events: auto;
+  margin: 0 auto clamp(56px, 10svh, 120px); max-width: 60ch;
+}
+.bs-stage:not(.is-webgl) .bs-station__title { margin-bottom: 0.8rem; }
+.bs-stage:not(.is-webgl) .bs-hud__lead { margin-bottom: 2rem; }
+.bs-stage:not(.is-webgl) .bs-chapters,
+.bs-stage:not(.is-webgl) .bs-hint { display: none; }
+
+.bs-hint {
+  position: absolute; left: 50%; bottom: clamp(24px, 4vh, 54px); transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 0.9rem;
+  transition: opacity 0.7s var(--ease);
+}
+.bs-hint.is-hidden { opacity: 0; pointer-events: none; }
+.bs-hint__line { width: 1px; height: 46px; background: linear-gradient(var(--ink-faint), transparent);
+  position: relative; overflow: hidden; }
+.bs-hint__line::after { content: ""; position: absolute; inset: 0; background: var(--ink);
+  animation: bs-drop 2.4s var(--ease) infinite; }
+@keyframes bs-drop { 0% { transform: translateY(-100%); } 55%, 100% { transform: translateY(100%); } }
+
+.bs-sound { position: fixed; right: var(--pad); bottom: clamp(20px, 3vh, 40px); z-index: 110;
+  display: flex; align-items: flex-end; gap: 3px; height: 18px; }
+.bs-sound span { width: 2px; background: var(--ink-dim); height: 5px; transition: height 0.3s var(--ease); }
+.bs-sound.is-on span { animation: bs-eq 1.1s ease-in-out infinite alternate; }
+.bs-sound.is-on span:nth-child(2) { animation-delay: 0.18s; }
+.bs-sound.is-on span:nth-child(3) { animation-delay: 0.36s; }
+.bs-sound.is-on span:nth-child(4) { animation-delay: 0.09s; }
+@keyframes bs-eq { to { height: 17px; } }
+
+/* 舞台を固定したときは、以降の本文が舞台の上に重なる */
+[data-progress="chapter"] .bs-shell > *:not(.bs-stage),
+[data-progress="static"]  .bs-shell > *:not(.bs-stage) { position: relative; z-index: 2; background: var(--bg); }
+
+/* ---------- 5.9 常駐キャンバス（canvas: 'page'） ----------
+   3Dをページ全体の背後に固定し、文章がその上を流れる構成。
+   これを入れないと、舞台を通り過ぎた瞬間に3Dが消える。 */
+.bs-canvas--page {
+  position: fixed; inset: 0; z-index: 0;
+  pointer-events: none;
+}
+/* フィナーレのあいだだけ、3D（マスコットと台）をフッターのカードより前へ。
+   シーン側が html に .bs-finale-front を付け外しする（mascot.js）。
+   重なり順：固定ボタン(9999) ＞ 3D(888) ＞ カーソル(900は3Dの上) ＞ カード類。
+   canvas は pointer-events: none なのでボタン・リンクはそのまま押せる */
+.bs-finale-front .bs-canvas--page { z-index: 888; }
+.bs-finale-front .bs-cursor { z-index: 900; }
+.has-page-canvas body { background: transparent; }
+.has-page-canvas { background: var(--bg); }   /* 透明canvasの奥で地色を描くのはここ */
+.has-page-canvas .bs-shell,
+.has-page-canvas .bs-header,
+.has-page-canvas .bs-footer { position: relative; z-index: 1; }
+
+/* 常駐時の舞台の高さ。既定は1画面だが、scrollVh を指定すれば伸びる。
+   段取りの多い物語（blades など）は、ここに長さが要る。 */
+.has-page-canvas[data-progress="scroll"] .bs-stage,
+.has-page-canvas[data-progress="page"] .bs-stage {
+  height: calc(var(--bs-scroll-vh, 100) * 1svh);
+}
+.has-page-canvas[data-progress="scroll"] .bs-stage__sticky,
+.has-page-canvas[data-progress="page"] .bs-stage__sticky {
+  position: sticky; top: 0; height: 100svh;
+}
+
+/* 文章の背後は素通しにして、読むところだけ暗幕を敷く */
+.has-page-canvas .bs-section { background: transparent; }
+.has-page-canvas .bs-read,
+.has-page-canvas .bs-section--veil {
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(3px);
+}
+.has-page-canvas .bs-footer {
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
+  backdrop-filter: blur(6px);
+}
+/* 3Dの上に置く見出し・本文は、影で最低限の可読性を確保する */
+.has-page-canvas .bs-lead__title,
+.has-page-canvas .bs-benefits__title,
+.has-page-canvas .bs-faq__title,
+.has-page-canvas .bs-station__title {
+  text-shadow: 0 2px 24px color-mix(in srgb, var(--bg) 80%, transparent);
+}
+
+/* ---------- 5.95 文章側の演出 ---------- */
+[data-parallax] { will-change: transform; }
+
+[data-pin] { position: sticky; top: clamp(84px, 12vh, 140px); }
+
+.has-js [data-reveal="rise"] {
+  opacity: 0; transform: translateY(46px);
+  transition: opacity 1.1s var(--ease), transform 1.1s var(--ease);
+}
+.has-js [data-reveal="rise"].is-in { opacity: 1; transform: none; }
+
+[data-reveal="letters"] { display: inline-block; }
+.has-js [data-reveal="letters"] .bs-ch {
+  display: inline-block; opacity: 0; transform: translateY(0.55em);
+  transition: opacity .7s var(--ease), transform .7s var(--ease);
+}
+.has-js [data-reveal="letters"].is-in .bs-ch { opacity: 1; transform: none; }
+
+/* ---------- 6. エディトリアル ---------- */
+.bs-section { padding-block: clamp(96px, 15vh, 210px); position: relative; }
+.bs-section--tight { padding-block: clamp(64px, 9vh, 130px); }
+
+.bs-lead__label { grid-column: 1 / span 5; }
+.bs-lead__title {
+  grid-column: 7 / span 15;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: var(--t-h2);
+  line-height: 1.45;
+  letter-spacing: 0.005em;
+  margin: 0;
+  text-wrap: balance;
+}
+.bs-lead__body {
+  grid-column: 7 / span 11;
+  margin: clamp(28px, 4vw, 56px) 0 0;
+  color: var(--ink-dim);
+  max-width: 62ch;
+}
+
+.bs-figure { grid-column: 1 / -1; margin: clamp(48px, 8vh, 120px) 0 0; overflow: hidden; }
+.bs-figure img { width: 100%; height: auto; }
+.bs-figure figcaption { margin-top: 1rem; }
+
+/* ---------- 6.5 読み物（検索とAIに渡す実体） ---------- */
+.bs-read__label { grid-column: 1 / span 4; }
+.bs-read__body { grid-column: 6 / span 14; }
+.bs-read__h2 {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: var(--t-h2); line-height: 1.4; margin: 0 0 1.6em;
+  text-wrap: balance;
+}
+.bs-read__h3 {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: var(--t-h3); line-height: 1.5;
+  margin: 2.8em 0 0.9em; padding-top: 1.4em; border-top: 1px solid var(--line);
+}
+.bs-read__body p { margin: 0 0 1.6em; max-width: 62ch; }
+.bs-read__quote {
+  margin: 2.6em 0; padding-left: clamp(18px, 2.4vw, 38px);
+  border-left: 1px solid var(--line);
+}
+.bs-read__quote blockquote {
+  margin: 0 0 0.8em; font-family: var(--font-display);
+  font-size: clamp(1.05rem, 1.5vw, 1.45rem); line-height: 1.8; font-weight: 300;
+}
+.bs-read__quote figcaption { margin: 0; }
+
+/* ---------- 7. 便益（番号つきの3段） ---------- */
+.bs-benefits__head { grid-column: 1 / span 9; }
+.bs-benefits__title {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: var(--t-h2); line-height: 1.35; margin: 0.6rem 0 0;
+}
+.bs-benefits__list { grid-column: 12 / span 13; }
+
+.bs-benefit {
+  display: grid;
+  grid-template-columns: 3.2rem 1fr;
+  column-gap: clamp(16px, 2vw, 34px);
+  padding-block: clamp(28px, 4vh, 48px);
+  border-top: 1px solid var(--line);
+}
+.bs-benefit:last-child { border-bottom: 1px solid var(--line); }
+.bs-benefit__no {
+  font-family: var(--font-ui); font-size: var(--t-meta);
+  letter-spacing: 0.16em; color: var(--ink-faint); padding-top: 0.55em;
+}
+.bs-benefit__title {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: var(--t-h3); margin: 0 0 0.6rem; line-height: 1.5;
+}
+.bs-benefit__text { margin: 0; color: var(--ink-dim); max-width: 52ch; }
+
+/* ---------- 8. オファー ---------- */
+.bs-offer { grid-column: 5 / span 16; text-align: center; }
+.bs-offer__title {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: var(--t-h2); line-height: 1.4; margin: 1rem 0 0;
+}
+.bs-offer__note { color: var(--ink-dim); margin: 1.6rem auto 0; max-width: 46ch; }
+.bs-offer__actions {
+  display: flex; flex-wrap: wrap; gap: 14px; justify-content: center;
+  margin-top: clamp(30px, 4vw, 52px);
+}
+
+/* ---------- 9. FAQ ---------- */
+.bs-faq__title { grid-column: 1 / span 8; font-family: var(--font-display);
+  font-weight: 300; font-size: var(--t-h2); margin: 0; line-height: 1.35; }
+.bs-faq__list { grid-column: 11 / span 14; }
+
+.bs-faq__item { border-top: 1px solid var(--line); }
+.bs-faq__item:last-child { border-bottom: 1px solid var(--line); }
+.bs-faq__trigger {
+  display: flex; width: 100%; gap: 24px; align-items: flex-start;
+  justify-content: space-between; text-align: left;
+  padding-block: clamp(22px, 3vh, 34px);
+}
+.bs-faq__q { font-family: var(--font-display); font-size: var(--t-h3);
+  font-weight: 400; line-height: 1.55; }
+.bs-faq__sign {
+  position: relative; flex: 0 0 14px; height: 14px; margin-top: 0.5em;
+}
+.bs-faq__sign::before, .bs-faq__sign::after {
+  content: ""; position: absolute; background: var(--ink);
+  transition: transform 0.55s var(--ease), opacity 0.55s var(--ease);
+}
+.bs-faq__sign::before { inset: 6px 0 auto; height: 1px; }
+.bs-faq__sign::after { inset: 0 6px auto; width: 1px; height: 14px; }
+.bs-faq__item.is-open .bs-faq__sign::after { transform: scaleY(0); opacity: 0; }
+
+.bs-faq__body {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.7s var(--ease);
+}
+.bs-faq__body p {
+  margin: 0 0 clamp(22px, 3vh, 34px);
+  color: var(--ink-dim); max-width: 62ch;
+}
+
+/* ---------- 10. フッター ---------- */
+.bs-footer { border-top: 1px solid var(--line); padding-block: clamp(60px, 9vh, 120px) 40px; }
+.bs-footer__blocks { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); }
+.bs-footer__block {
+  background: var(--bg); padding: clamp(32px, 5vw, 70px);
+  display: flex; flex-direction: column; gap: 1.6rem; align-items: flex-start;
+}
+.bs-footer__block p { margin: 0; color: var(--ink-dim); max-width: 40ch; }
+.bs-footer__bottom {
+  display: flex; flex-wrap: wrap; gap: 18px 34px;
+  justify-content: space-between; align-items: center;
+  margin-top: clamp(40px, 6vh, 76px);
+}
+.bs-footer__links { display: flex; flex-wrap: wrap; gap: 18px 26px; }
+
+/* ---------- 11. 出現 ---------- */
+.has-js [data-reveal] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+  will-change: opacity, transform;
+}
+.has-js [data-reveal].is-in { opacity: 1; transform: none; }
+
+.has-js [data-reveal="mask"] {
+  opacity: 1; transform: none;
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 1.25s var(--ease);
+}
+.has-js [data-reveal="mask"].is-in { clip-path: inset(0 0 0 0); }
+
+.has-js [data-reveal="zoom"] { opacity: 1; transform: none; overflow: hidden; }
+.has-js [data-reveal="zoom"] img { transform: scale(1.14); transition: transform 1.6s var(--ease); }
+.has-js [data-reveal="zoom"].is-in img { transform: none; }
+
+/* ---------- 12. レスポンシブ ---------- */
+@media (max-width: 1024px) {
+  .bs-lead__label { grid-column: 1 / -1; }
+  .bs-lead__title, .bs-lead__body { grid-column: 1 / -1; }
+  .bs-benefits__head, .bs-benefits__list { grid-column: 1 / -1; }
+  .bs-benefits__list { margin-top: clamp(30px, 5vh, 60px); }
+  .bs-faq__title, .bs-faq__list { grid-column: 1 / -1; }
+  .bs-faq__list { margin-top: clamp(28px, 4vh, 54px); }
+  .bs-offer { grid-column: 1 / -1; }
+  .bs-footer__blocks { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 1024px) {
+  .bs-read__label, .bs-read__body { grid-column: 1 / -1; }
+  .bs-read__body { margin-top: 1.6rem; }
+  .bs-station__no { grid-column: 1 / -1; margin-bottom: 0.6rem; }
+  .bs-station__title { grid-column: 1 / -1; }
+  .bs-station__text { grid-column: 1 / -1; margin-top: 1.4rem; }
+}
+
+@media (max-width: 720px) {
+  .bs-header__nav { display: none; }
+  .bs-stanza { font-size: clamp(1.5rem, 6.6vw, 2.3rem); }
+  .bs-hud__lead { font-size: clamp(1.4rem, 6.2vw, 2rem); }
+  .bs-hud__foot { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .bs-chapters { right: 10px; }
+  .bs-benefit { grid-template-columns: 1fr; row-gap: 0.6rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  [data-reveal] { opacity: 1 !important; transform: none !important; clip-path: none !important; }
+}
+
+/* ═══════════ 幕（スプラッシュ） ═══════════
+   本編の3Dとは別物。中央に紋を置き、三本が一本ずつ嵌まる。
+   地は透かさない。ここは「入口」で、本編の続きではないため。 */
+.has-js .bs-loader[data-splash="true"] {
+  position: fixed; inset: 0; z-index: 4000;
+  display: grid; grid-template-rows: 1fr auto;
+  place-items: center; gap: 0;
+  padding: clamp(28px, 5vw, 72px);
+  /* ★黒幕→白/生成りへ（2026-08-11）。この [data-splash="true"] 付きの版が
+     motif.css の同名クラスより詳細度が高く、そちらだけ直しても実際には
+     こちらが勝って黒いままになっていた（実際に踏んだ）。値は必ず
+     motif.css の .has-js .bs-loader と揃えること。 */
+  background:
+    radial-gradient(72% 58% at 50% 44%, #F7F4EE, #EDE8DD 72%),
+    #EDE8DD;
+  color: #14120F;
+  transition: opacity .85s ease, clip-path 1.1s cubic-bezier(.76, 0, .24, 1);
+  clip-path: polygon(-30% 0, 130% 0, 130% 100%, -30% 100%);
+}
+/* 刃が通ったように、斜めに開いて消える */
+.bs-loader[data-splash="true"].is-gone {
+  opacity: 0; pointer-events: none;
+  clip-path: polygon(-30% -30%, 130% -130%, 130% -30%, -30% 130%);
+}
+
+.bs-loader__inner { display: grid; justify-items: center; gap: clamp(20px, 3.4vh, 44px); }
+.bs-loader__foot {
+  width: min(1100px, 92vw);
+  display: grid; justify-items: end; gap: clamp(8px, 1.4vh, 16px);
+}
+
+/* ── 紋 ── */
+.bs-crest { width: clamp(290px, 36vw, 500px); height: auto; overflow: visible; }
+.bs-crest__blade {
+  transform: rotate(var(--a)) translateY(54px) scale(.965);
+  /* 軸＝刃の途中。ここを軸にすると、三本が「刃のところ」で交わる */
+  transform-origin: 1.9px -48.3px;
+  opacity: 0;
+  transition: transform .16s cubic-bezier(.18, 1.5, .36, 1), opacity .1s linear;
+}
+/* 嵌まった刀 */
+.bs-crest__blade.is-set { transform: rotate(var(--a)); opacity: 1; }
+
+/* PUNTO E LINEA 公式ロゴの紋（点と線）。刀の見本の class 名だけ流用している。
+   刀の見本用の .bs-crest__stroke { fill:#C6D2DE } が残ったままだと、輪（結び目）の
+   パスは閉じた形なので地の色が中に見えてしまう（実際に踏んだ＝結び目の中央が
+   白っぽく抜けて見えた）。線としてのみ見せたいので fill は明示的に打ち消す。
+   ★線の太さ 7px→2.2px（2026-08-11、「点と線が太すぎる、繊細に」の指摘）。
+   #pelRough は index.html 側の紋SVGに埋めた feTurbulence フィルタ。手描きの
+   ような細かい揺らぎを線に与える（角がきっちり直線・真円だと「安っぽい」と
+   感じられやすいため）。 */
+.bs-crest--pel .bs-crest__stroke {
+  fill: none;
+  stroke: var(--accent, #B6242A); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round;
+  filter: url(#pelRough);
+}
+.bs-crest--pel .bs-crest__vein { fill: var(--accent, #B6242A); stroke: none; }
+
+.bs-crest__steel  { fill: #C6D2DE; }              /* 刀身の下地 */
+.bs-crest__ji     { fill: #5E7387; }              /* 鎬より棟側。地鉄の翳り */
+.bs-crest__ha     { fill: #F7FAFD; }              /* 刃文より刃側。焼きが入って白い */
+.bs-crest__hamon  { fill: none; stroke: rgba(255,255,255,.85); stroke-width: 1.1; }
+.bs-crest__ridge  { fill: none; stroke: rgba(16, 26, 36, .38); stroke-width: 1.2; }
+.bs-crest__yokote { fill: none; stroke: rgba(16, 26, 36, .45); stroke-width: 1.1; }
+.bs-crest__habaki { fill: #A5831F; }
+.bs-crest__fit    { fill: #C9A227; }
+.bs-crest__grip   { fill: #14161A; }
+
+/* 嵌まった瞬間、刃に光が走る */
+.bs-crest__spark {
+  fill: none; stroke: #FFFFFF; stroke-width: 11; stroke-linecap: round;
+  opacity: 0; filter: blur(3px);
+}
+.bs-crest__blade.is-set .bs-crest__spark { animation: bs-chakin .34s ease-out 1; }
+@keyframes bs-chakin {
+  0%   { opacity: .95; stroke-width: 16; }
+  100% { opacity: 0;   stroke-width: 4; }
+}
+
+/* 交点で弾ける火花 */
+.bs-crest__flash { fill: #FFFFFF; opacity: 0;
+  transform-origin: 1.9px -48.3px; }
+.bs-crest.is-hit .bs-crest__flash { animation: bs-hit .38s ease-out 1; }
+@keyframes bs-hit {
+  0%   { opacity: .9; transform: scale(.2); }
+  100% { opacity: 0;  transform: scale(2.6); }
+}
+
+.bs-loader__mark {
+  margin: 0;
+  font-family: var(--font-ui); font-weight: 500;
+  font-size: clamp(.72rem, 1vw, .92rem); letter-spacing: .3em;
+  color: rgba(242, 239, 233, .66);
+  opacity: 0; animation: bs-splash-in 1.2s .2s ease forwards;
+}
+@keyframes bs-splash-in { to { opacity: 1; } }
+
+/* 数取り機は隅へ。主役は紋 */
+.bs-odo {
+  display: flex; gap: .02em;
+  font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(2.0rem, 4.4vw, 3.6rem); line-height: 1;
+  letter-spacing: -.01em; font-variant-numeric: tabular-nums;
+  color: rgba(242, 239, 233, .8);
+}
+/* 帯の1コマは 1em（送り量の計算がこれに乗る）。窓はそれより浅くして、
+   隣のコマの頭と足が覗くのを切る。ずらしたぶんは余白で戻す。 */
+.bs-odo__digit { display: block; height: .86em; overflow: hidden; }
+.bs-odo__reel {
+  display: block; margin-top: -.08em; will-change: transform;
+  transition: transform .34s cubic-bezier(.22, 1, .36, 1);
+}
+.bs-odo__reel > span { display: block; height: 1em; line-height: 1; text-align: center; }
+
+.bs-loader__bar {
+  width: 100%; position: relative; height: 1px;
+  background: rgba(242, 239, 233, .14); overflow: hidden;
+}
+.bs-loader__bar-fill {
+  position: absolute; inset: 0; transform-origin: 0 50%; transform: scaleX(0);
+  background: linear-gradient(90deg, rgba(242,239,233,.3), #F2EFE9);
+}
+
+/* 幕のあいだはヘッダーを伏せる */
+.is-locked .bs-header { opacity: 0; transition: opacity .5s ease; }
+
+@media (prefers-reduced-motion: reduce) {
+  .has-js .bs-loader[data-splash="true"] { transition: opacity .3s ease; clip-path: none; }
+  .bs-loader[data-splash="true"].is-gone { clip-path: none; }
+  .bs-crest__blade { transition: none; }
+  .bs-crest__blade.is-set .bs-crest__spark,
+  .bs-crest.is-hit .bs-crest__flash { animation: none; }
+}
+
+/* ═══════════ 日本語の折り返し ═══════════
+   日本語は「文節の境目」で折らないと、助詞だけが行頭に残ったり、熟語が
+   真ん中で割れたりする（「対面コンサルティン／グ」）。
+   word-break: auto-phrase はブラウザが文節を判定して折る（Chrome/Edge。
+   他のブラウザは無視するだけなので置いて損がない）。
+   text-wrap: pretty と組み合わせて、最終行に1語だけ落ちるのも避ける。
+
+   ルーブリック項目13はここが効いているかを見る。**消さないこと。**
+   案件ごとにクラス名を書き直さなくていいよう、スキル共通クラスで指定してある。 */
+.bs-h1, .bs-h2, .bs-h3,
+.bs-beat__line, .bs-beat__big, .bs-beat__mid, .bs-beat__after,
+.bs-hero__copy, .bs-hero__sub, .bs-lead, .bs-lead-small,
+.bs-ask, .bs-ask__end, .bs-brand,
+.bs-three li,
+.bs-voices__title, .bs-voice__lead, .bs-voice__who,
+.bs-svc__item h3, .bs-svc__item p,
+.bs-message__copy, .bs-message__body p,
+.bs-station__title, .bs-station__text,
+.bs-award__label, .bs-award__value,
+.bs-footer__block p,
+.bs-loader__mark, .bs-loader__enter,
+.bs-hud__lead, .bs-doors__title {
+  word-break: auto-phrase;
+  overflow-wrap: normal;
+  line-break: strict;
+}
+
+/* 見出しは行の長さも揃える。ぶら下がりの1文字を作らない */
+.bs-h1, .bs-h2, .bs-h3,
+.bs-beat__big, .bs-hero__copy, .bs-voices__title, .bs-voice__lead,
+.bs-svc__item h3, .bs-message__copy, .bs-station__title, .bs-doors__title {
+  text-wrap: balance;
+}
+
+/* 本文は最終行に1語だけ落とさない */
+.bs-beat__mid, .bs-beat__after, .bs-hero__sub, .bs-lead, .bs-lead-small,
+.bs-svc__item p, .bs-message__body p, .bs-voice__who,
+.bs-station__text, .bs-footer__block p {
+  text-wrap: pretty;
+}
+
+/* 数字と単位が離れて折れないようにする */
+.bs-award__value, .bs-no { white-space: nowrap; }
+
+/* ═══════════ 縦画面の常駐CTA（dock） ═══════════
+   スマホで、ページのどこに居ても押せる問い合わせボタン。PCでは出さない。
+   HTMLに .bs-dock を置いたときだけ現れる（置かなければ何も起きない）。
+   顔画像（.bs-dock__face）は任意。無ければ2カラムで成立する。
+   由来と勘所 → references/dom-acts.md §4 */
+.bs-dock { display: none; }
+
+@media (max-width: 980px) {
+  .bs-dock {
+    --dock-bg: #14161C;      /* 明暗どちらの章の上にも乗るので、地の色に追従させない */
+    --dock-ink: #F4F2ED;
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    /* ★ホームバーを避ける。入れないと iPhone で下端が埋まる */
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    z-index: 60;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 16px;
+    border-radius: 999px;
+    background: var(--dock-bg);
+    color: var(--dock-ink);
+    text-decoration: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .28);
+  }
+  .bs-dock:has(.bs-dock__face) { padding-left: 10px; }
+
+  .bs-dock__face {
+    width: 46px; height: 46px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  }
+  .bs-dock__body { display: grid; gap: 2px; min-width: 0; }
+  .bs-dock__label {
+    font-size: .94rem; font-weight: 500; letter-spacing: .01em;
+    white-space: nowrap;
+  }
+  .bs-dock__sub {
+    font-size: .66rem; letter-spacing: .02em;
+    color: color-mix(in srgb, var(--dock-ink) 66%, transparent);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .bs-dock__arrow { font-style: normal; color: var(--accent); font-size: 1.05rem; }
+
+  /* ★常駐ぶんの席をページ末尾に空ける。空けると最後の行が隠れなくなる */
+  .bs-footer { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
+
+  /* 入口の幕が出ているあいだは隠す */
+  .is-locked .bs-dock { display: none; }
+}
+
+@media (max-width: 980px) and (prefers-reduced-motion: no-preference) {
+  .bs-dock { transition: transform .5s var(--ease), opacity .5s var(--ease); }
+}
+
+
+</style>
+<style>
+/* =========================================================================
+   works.css — 施工事例ページ（プレースホルダー版）専用スタイル
+   -------------------------------------------------------------------------
+   3Dモチーフを使わない静的ページなので、brand.css のトークン（色・余白・
+   フォント・ボタン）だけを借りて、ギャラリー部分だけをここに足す。
+   写真が揃うまでの「配置とデザインだけ先に作る」段階のもの。
+   実物の写真が届いたら、.works-card の background-image を差し替える運用を想定。
+   ========================================================================= */
+
+.works-hero {
+  padding: clamp(140px, 20vh, 220px) var(--pad) clamp(48px, 7vh, 88px);
+}
+.works-hero__title {
+  margin: .5em 0 0;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  line-height: 1.5;
+  letter-spacing: .03em;
+}
+.works-hero__lead {
+  margin: clamp(20px, 3vh, 32px) 0 0;
+  max-width: 46ch;
+  color: var(--ink-dim, rgba(20,18,15,.68));
+  font-size: clamp(.98rem, 1.2vw, 1.08rem);
+  line-height: 1.9;
+}
+
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: clamp(20px, 2.6vw, 34px);
+  padding: 0 var(--pad) clamp(80px, 11vh, 140px);
+}
+
+.works-card {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 6px;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 120% at 12% 12%, rgba(255,255,255,.55), transparent 55%),
+    linear-gradient(155deg, #EDE8DD 0%, #E3DDCF 62%, #DAD3C2 100%);
+  border: 1px solid var(--line);
+  transition: transform .5s var(--ease), box-shadow .5s var(--ease);
+}
+.works-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(20, 18, 15, .12);
+}
+
+/* 点と線のコーナーマーク。まだ写真が無いことを「空箱」ではなく
+   ブランドの意匠として見せるための最小限の装飾 */
+.works-card__mark {
+  position: absolute; top: 20px; left: 20px;
+  width: 34px; height: 34px;
+}
+.works-card__mark::before {
+  content: ""; position: absolute; left: 0; top: 0;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent);
+}
+.works-card__mark::after {
+  content: ""; position: absolute; left: 3px; top: 3px;
+  width: 26px; height: 1px; background: var(--ink-faint, rgba(20,18,15,.34));
+  transform-origin: 0 0; transform: rotate(38deg);
+}
+
+.works-card__body {
+  position: absolute; left: 20px; right: 20px; bottom: 18px;
+}
+.works-card__no {
+  margin: 0 0 .3em; font-family: var(--font-ui);
+  font-size: .72rem; letter-spacing: .22em; color: var(--ink-faint, rgba(20,18,15,.4));
+}
+.works-card__cat {
+  margin: 0; font-family: var(--font-display); font-weight: 400;
+  font-size: 1.15rem; letter-spacing: .04em; color: var(--ink);
+}
+.works-card__soon {
+  position: absolute; top: 18px; right: 18px;
+  font-family: var(--font-ui); font-size: .68rem; letter-spacing: .16em;
+  color: var(--ink-faint, rgba(20,18,15,.42));
+  border: 1px solid var(--line); border-radius: 999px;
+  padding: .35em .85em;
+  background: color-mix(in srgb, var(--bg) 70%, transparent);
+}
+
+.works-note {
+  margin: 0 auto;
+  max-width: 920px;
+  padding: 0 var(--pad) clamp(90px, 12vh, 150px);
+  text-align: center;
+}
+.works-note p {
+  margin: 0;
+  color: var(--ink-dim, rgba(20,18,15,.68));
+  font-size: .95rem; line-height: 1.9;
+}
+
+/* ---- トップページの「していること」内に置くミニ紹介。カードはそのまま流用 ---- */
+.works-teaser { margin-top: clamp(56px, 8vh, 100px); }
+.works-teaser__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: clamp(16px, 2vw, 26px);
+}
+.works-teaser__foot { margin-top: clamp(24px, 3vh, 40px); text-align: center; }
+
+</style>
+</head>
+<body>
+
+<header class="bs-header">
+  <a class="bs-header__logo bs-header__logo--text" href="index.html" data-cursor="Home">PUNTO E LINEA</a>
+  <nav class="bs-header__nav" aria-label="主要">
+    <a class="bs-header__link" href="index.html#services">サービス</a>
+    <a class="bs-header__link" href="index.html#faq">よくある質問</a>
+    <a class="bs-btn" href="index.html#contact" data-cursor="Contact">相談する</a>
+  </nav>
+</header>
+
+<main class="bs-shell">
+  <section class="works-hero">
+    <div class="bs-container">
+      <p class="bs-meta bs-meta--dot">Works ／ 施工事例</p>
+      <h1 class="works-hero__title">これまで手がけてきた、<br>店舗・オフィス・住居の現場です。</h1>
+      <p class="works-hero__lead">
+        現在、掲載用の写真を準備しています。ここには実際に施工した現場を
+        1件ずつ、工程の様子とあわせて掲載していく予定です。
+        まずは配置とデザインだけ先にご確認いただいています。
+      </p>
+    </div>
+  </section>
+
+  <div class="works-grid bs-container">
+    <article class="works-card">
+      <span class="works-card__mark" aria-hidden="true"></span>
+      <span class="works-card__soon">PHOTO準備中</span>
+      <div class="works-card__body">
+        <p class="works-card__no">CASE 01</p>
+        <p class="works-card__cat">飲食店</p>
+      </div>
+    </article>
+    <article class="works-card">
+      <span class="works-card__mark" aria-hidden="true"></span>
+      <span class="works-card__soon">PHOTO準備中</span>
+      <div class="works-card__body">
+        <p class="works-card__no">CASE 02</p>
+        <p class="works-card__cat">オフィス</p>
+      </div>
+    </article>
+    <article class="works-card">
+      <span class="works-card__mark" aria-hidden="true"></span>
+      <span class="works-card__soon">PHOTO準備中</span>
+      <div class="works-card__body">
+        <p class="works-card__no">CASE 03</p>
+        <p class="works-card__cat">住居</p>
+      </div>
+    </article>
+    <article class="works-card">
+      <span class="works-card__mark" aria-hidden="true"></span>
+      <span class="works-card__soon">PHOTO準備中</span>
+      <div class="works-card__body">
+        <p class="works-card__no">CASE 04</p>
+        <p class="works-card__cat">物販店</p>
+      </div>
+    </article>
+    <article class="works-card">
+      <span class="works-card__mark" aria-hidden="true"></span>
+      <span class="works-card__soon">PHOTO準備中</span>
+      <div class="works-card__body">
+        <p class="works-card__no">CASE 05</p>
+        <p class="works-card__cat">特注造作家具</p>
+      </div>
+    </article>
+    <article class="works-card">
+      <span class="works-card__mark" aria-hidden="true"></span>
+      <span class="works-card__soon">PHOTO準備中</span>
+      <div class="works-card__body">
+        <p class="works-card__no">CASE 06</p>
+        <p class="works-card__cat">住居リノベーション</p>
+      </div>
+    </article>
+  </div>
+
+  <div class="works-note">
+    <p>掲載している区分・件数は仮のものです。写真の準備が整い次第、実際の現場名・施工内容とあわせて順次公開します。<br>個別の事例について先にご覧になりたい場合は、お気軽にお問い合わせください。</p>
+  </div>
+</main>
+
+<footer class="bs-footer bs-footer--light">
+  <div class="bs-container">
+    <div class="bs-footer__blocks">
+      <div class="bs-footer__block">
+        <p class="bs-meta bs-meta--dot">会社概要</p>
+        <p>株式会社プント エ リネア<br>設立 平成27年3月9日</p>
+        <a class="bs-btn" href="index.html#about" data-cursor="More">会社概要を見る</a>
+      </div>
+      <div class="bs-footer__block">
+        <p class="bs-meta bs-meta--dot">お問い合わせ</p>
+        <p>東京都豊島区南池袋3-15-13 第二前田ビル6F<br>TEL 03-6912-8463　FAX 03-6912-8589</p>
+        <a class="bs-btn" href="index.html#contact" data-cursor="Talk">相談する</a>
+      </div>
+    </div>
+    <div class="bs-footer__bottom">
+      <span class="bs-meta">&copy; <span id="bs-year">2026</span> PUNTO E LINEA Co., Ltd.</span>
+      <nav class="bs-footer__links" aria-label="補助">
+        <a class="bs-meta" href="works.html">施工事例</a>
+        <a class="bs-meta" href="#">プライバシーポリシー（準備中）</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script>document.getElementById('bs-year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
